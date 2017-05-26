@@ -1,28 +1,22 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
 namespace SeleniumAndSpecflow
 {
     [Binding]
-    public class GoogleSearch : IDisposable
+    public class GoogleSearch
     {
-        private readonly IWebDriver _webDriver;
-        private readonly IWait<IWebDriver> _defaultWait;
+        private IWebDriver _webDriver;
+        private IWait<IWebDriver> _defaultWait;
         private string _searchTerm;
 
-        public GoogleSearch()
+        public GoogleSearch(IWebDriver webDriver, IWait<IWebDriver> defaultWait)
         {
-            _webDriver = new ChromeDriver();
-
-            _defaultWait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5))
-            {
-                PollingInterval = TimeSpan.FromMilliseconds(100)
-            };
+            _webDriver = webDriver;
+            _defaultWait = defaultWait;
         }
 
         [Given(@"I navigate to (.*)")]
@@ -62,15 +56,6 @@ namespace SeleniumAndSpecflow
                     ExpectedConditions.ElementExists(By.CssSelector($"div[data-async-context=\"query:{_searchTerm}\"]")));
 
             Assert.IsNotEmpty(resultsDiv.Text);
-        }
-
-        [AfterScenario]
-        public void Dispose()
-        {
-            if (_webDriver != null)
-            {
-                _webDriver.Quit();
-            }
         }
     }
 }
