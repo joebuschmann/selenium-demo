@@ -1,6 +1,6 @@
 ﻿Feature: GoogleSearch
 	In order to validate Google's search service
-	As a first time user of Selenium
+	as a first time user of Selenium
 	I want to perform a search
 
 Scenario: Perform a Google Search

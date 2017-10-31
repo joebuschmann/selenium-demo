@@ -31,7 +31,7 @@ namespace SeleniumAndSpecflow
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GoogleSearch", "\tIn order to validate Google\'s search service\r\n\tAs a first time user of Selenium\r" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GoogleSearch", "\tIn order to validate Google\'s search service\r\n\tas a first time user of Selenium\r" +
                     "\n\tI want to perform a search", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
