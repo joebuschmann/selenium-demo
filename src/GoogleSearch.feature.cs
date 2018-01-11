@@ -80,6 +80,47 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dictionary Search")]
+        public virtual void DictionarySearch()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dictionary Search", ((string[])(null)));
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 12
+ testRunner.Given("I navigate to www.google.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 13
+ testRunner.When("I search for define: relativity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.Then("Google should show the dictionary widget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
+ testRunner.And("the definition for relativity should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Unit Conversions")]
+        [NUnit.Framework.TestCaseAttribute("length", "5", "kilometer", "3.10686", "mile", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("mass", "5", "kilogram", "11.0231", "pound", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("digital storage", "1000", "kilobyte", "1", "megabyte", new string[0])]
+        public virtual void UnitConversions(string type, string src_Amount, string src_Unit, string dest_Amount, string dest_Unit, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unit Conversions", exampleTags);
+#line 17
+this.ScenarioSetup(scenarioInfo);
+#line 18
+ testRunner.Given("I navigate to www.google.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 19
+ testRunner.When(string.Format("I convert {0} {1} to {2}", src_Amount, src_Unit, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+ testRunner.Then(string.Format("Google should show the conversion widget for {0}", type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.And(string.Format("the conversion result should be {0} {1}", dest_Amount, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
