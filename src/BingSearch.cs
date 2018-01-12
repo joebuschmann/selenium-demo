@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -6,15 +7,15 @@ using TechTalk.SpecFlow;
 
 namespace SeleniumAndSpecflow
 {
-    [Binding, Scope(Feature = "GoogleSearch")]
-    public class GoogleSearch
+    [Binding, Scope(Feature = "BingSearch")]
+    public class BingSearch
     {
         private IWebDriver _webDriver;
         private IWait<IWebDriver> _defaultWait;
         private string _searchTerm;
         private IWebElement _widgetElement;
 
-        public GoogleSearch(IWebDriver webDriver, IWait<IWebDriver> defaultWait)
+        public BingSearch(IWebDriver webDriver, IWait<IWebDriver> defaultWait)
         {
             _webDriver = webDriver;
             _defaultWait = defaultWait;
@@ -34,29 +35,22 @@ namespace SeleniumAndSpecflow
         {
             _searchTerm = searchTerm;
 
-            IWebElement searchInput = _webDriver.FindElement(By.CssSelector("input#lst-ib"));
+            IWebElement searchInput = _webDriver.FindElement(By.CssSelector("input#sb_form_q"));
             searchInput.SendKeys(searchTerm);
 
-            IWebElement searchForm = _webDriver.FindElement(By.CssSelector("form[action=\"/search\"]"));
+            IWebElement searchForm = _webDriver.FindElement(By.CssSelector("form#sb_form"));
             searchForm.Submit();
         }
 
-        [Then(@"Google should return valid search results")]
+        [Then(@"Bing should return valid search results")]
         public void ValidateSearchResults()
         {
-            IWebElement searchResultsHeader = _defaultWait.Until(d =>
-            {
-                var results = d.FindElements(By.CssSelector("h2"));
-                return results.FirstOrDefault(h => h.GetAttribute("innerText") == "Search Results");
-            });
+            IWebElement searchInput = _defaultWait.Until(d => d.FindElement(By.CssSelector("input#sb_form_q")));
+            Assert.AreEqual(_searchTerm, searchInput.GetAttribute("value"));
 
-            Assert.IsNotNull(searchResultsHeader);
-
-            IWebElement resultsDiv =
-                _defaultWait.Until(
-                    ExpectedConditions.ElementExists(By.CssSelector($"div[data-async-context=\"query:{_searchTerm}\"]")));
-
-            Assert.IsNotEmpty(resultsDiv.Text);
+            IEnumerable<IWebElement> resultsList =
+                _defaultWait.Until(d => d.FindElement(By.Id("b_results")).FindElements(By.TagName("li")));
+            Assert.IsTrue(resultsList.Any());
         }
 
         [When(@"I convert (.*) (.*) to (.*)")]
@@ -66,25 +60,22 @@ namespace SeleniumAndSpecflow
             Search(searchTerm);
         }
 
-        [Then(@"Google should show the conversion widget for (.*)")]
+        [Then(@"Bing should show the conversion widget for (.*)")]
         public void ValidateConversionWidgetIsVisible(string type)
         {
             // Find the widget container to verify it exists
-            _widgetElement = _defaultWait.Until(d =>
-            {
-                var results = d.FindElements(By.CssSelector("div.obcontainer"));
-                return results.FirstOrDefault();
-            });
+            _widgetElement = _defaultWait.Until(d => d.FindElement(By.Id("rich_uc")));
+            IWebElement titleElement =
+                _defaultWait.Until(d => _widgetElement.FindElement(By.CssSelector("h2.b_topTitle")));
 
-            Assert.IsNotNull(_widgetElement);
+            Assert.AreEqual("convert units", titleElement.Text.ToLower());
 
             // Make sure the correct measurement type is selected in the form
             IWebElement selectedOption = _defaultWait.Until(d =>
-                _widgetElement.FindElement(By.CssSelector("div._frf select option:checked")));
+                _widgetElement.FindElement(By.CssSelector("select#uc_st option:checked")));
 
             Assert.IsNotNull(selectedOption);
             Assert.AreEqual(type.ToLower(), selectedOption.Text.ToLower());
-            Assert.AreEqual(type.ToLower(), selectedOption.GetAttribute("value").ToLower());
         }
 
         [Then(@"the conversion result should be (.*) (.*)")]
@@ -93,7 +84,7 @@ namespace SeleniumAndSpecflow
             // Make sure the correct amount is displayed
             IWebElement amountElement = _defaultWait.Until(d =>
             {
-                return _widgetElement.FindElement(By.CssSelector("div#_Cif input"));
+                return _widgetElement.FindElement(By.CssSelector("input#uc_rv"));
             });
 
             Assert.AreEqual(destAmount, amountElement.GetAttribute("value"));
@@ -101,34 +92,25 @@ namespace SeleniumAndSpecflow
             // Make sure the correct unit is selected
             IWebElement selectedOption = _defaultWait.Until(d =>
             {
-                return _widgetElement.FindElement(By.CssSelector("div#_Cif select option:checked"));
+                return _widgetElement.FindElement(By.CssSelector("select#uc_rt option:checked"));
             });
 
             Assert.IsNotNull(selectedOption);
             Assert.AreEqual(destUnit.ToLower(), selectedOption.Text.ToLower());
         }
 
-        [Then(@"Google should show the dictionary widget")]
+        [Then(@"Bing should show the dictionary widget")]
         public void ValidateDictionaryWidgetIsVisible()
         {
-            // Find the widget container to verify it exists
-            _widgetElement = _defaultWait.Until(d =>
-            {
-                var results = d.FindElements(By.CssSelector("div.lr_container"));
-                return results.FirstOrDefault();
-            });
-
-            Assert.IsNotNull(_widgetElement);
+            _widgetElement = _defaultWait.Until(d => d.FindElement(By.CssSelector("div.WordContainer")));
         }
 
         [Then(@"the definition for (.*) should be displayed")]
         public void ValidateDefinition(string word)
         {
-            IWebElement input =
-                _defaultWait.Until(d => _widgetElement.FindElement(By.CssSelector($"input[value=\"{word}\"]")));
-
-            Assert.AreEqual("text", input.GetAttribute("type"));
-            Assert.AreEqual("Enter a word", input.GetAttribute("placeholder"));
+            IWebElement searchInput = _defaultWait.Until(d => d.FindElement(By.CssSelector("input#sb_form_q")));
+            Assert.AreEqual(word, searchInput.GetAttribute("value").Replace("define:", "").Trim());
         }
+
     }
 }

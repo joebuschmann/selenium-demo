@@ -66,6 +66,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BingSearch.cs">
+      <DependentUpon>BingSearch.feature</DependentUpon>
+    </Compile>
+    <Compile Include="BingSearch.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BingSearch.feature</DependentUpon>
+    </Compile>
     <Compile Include="BootstrapSelenium.cs" />
     <Compile Include="GoogleSearch.cs">
       <DependentUpon>GoogleSearch.feature</DependentUpon>
@@ -79,6 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BingSearch.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BingSearch.feature.cs</LastGenOutput>
+    </None>
     <None Include="GoogleSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GoogleSearch.feature.cs</LastGenOutput>
