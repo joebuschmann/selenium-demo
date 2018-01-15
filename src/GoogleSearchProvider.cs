@@ -2,34 +2,22 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using TechTalk.SpecFlow;
 
 namespace SeleniumAndSpecflow
 {
-    [Binding, Scope(Feature = "GoogleSearch")]
-    public class GoogleSearch
+    public class GoogleSearchProvider : ISearchProvider
     {
-        private IWebDriver _webDriver;
-        private IWait<IWebDriver> _defaultWait;
+        private readonly IWebDriver _webDriver;
+        private readonly IWait<IWebDriver> _defaultWait;
         private string _searchTerm;
         private IWebElement _widgetElement;
 
-        public GoogleSearch(IWebDriver webDriver, IWait<IWebDriver> defaultWait)
+        public GoogleSearchProvider(IWebDriver webDriver, IWait<IWebDriver> defaultWait)
         {
             _webDriver = webDriver;
             _defaultWait = defaultWait;
         }
 
-        [Given(@"I navigate to (.*)")]
-        public void Navigate(string url)
-        {
-            if (!url.StartsWith("http") && !url.StartsWith("https"))
-                url = "https://" + url;
-
-            _webDriver.Navigate().GoToUrl(url);
-        }
-
-        [When(@"I search for (.*)")]
         public void Search(string searchTerm)
         {
             _searchTerm = searchTerm;
@@ -41,7 +29,6 @@ namespace SeleniumAndSpecflow
             searchForm.Submit();
         }
 
-        [Then(@"Google should return valid search results")]
         public void ValidateSearchResults()
         {
             IWebElement searchResultsHeader = _defaultWait.Until(d =>
@@ -59,14 +46,6 @@ namespace SeleniumAndSpecflow
             Assert.IsNotEmpty(resultsDiv.Text);
         }
 
-        [When(@"I convert (.*) (.*) to (.*)")]
-        public void Convert(string srcAmount, string srcUnit, string destUnit)
-        {
-            string searchTerm = $"convert {srcAmount} {srcUnit} to {destUnit}";
-            Search(searchTerm);
-        }
-
-        [Then(@"Google should show the conversion widget for (.*)")]
         public void ValidateConversionWidgetIsVisible(string type)
         {
             // Find the widget container to verify it exists
@@ -87,7 +66,6 @@ namespace SeleniumAndSpecflow
             Assert.AreEqual(type.ToLower(), selectedOption.GetAttribute("value").ToLower());
         }
 
-        [Then(@"the conversion result should be (.*) (.*)")]
         public void ValidateConversionResult(string destAmount, string destUnit)
         {
             // Make sure the correct amount is displayed
@@ -108,7 +86,6 @@ namespace SeleniumAndSpecflow
             Assert.AreEqual(destUnit.ToLower(), selectedOption.Text.ToLower());
         }
 
-        [Then(@"Google should show the dictionary widget")]
         public void ValidateDictionaryWidgetIsVisible()
         {
             // Find the widget container to verify it exists
@@ -121,7 +98,6 @@ namespace SeleniumAndSpecflow
             Assert.IsNotNull(_widgetElement);
         }
 
-        [Then(@"the definition for (.*) should be displayed")]
         public void ValidateDefinition(string word)
         {
             IWebElement input =

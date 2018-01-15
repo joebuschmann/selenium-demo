@@ -1,4 +1,5 @@
-﻿Feature: BingSearch
+﻿@bing
+Feature: BingSearch
 	In order to validate the Bing search service
 	as a first time user of Selenium
 	I want to perform a search
@@ -6,18 +7,18 @@
 Scenario: Perform a Bing Search
 	Given I navigate to www.bing.com
 	When I search for kittens
-	Then Bing should return valid search results
+	Then the search engine should return valid search results
 
 Scenario: Dictionary Search
 	Given I navigate to www.bing.com
 	When I search for define: relativity
-	Then Bing should show the dictionary widget
+	Then the search engine should show the dictionary widget
 	And the definition for relativity should be displayed
 
 Scenario Outline: Unit Conversions
 	Given I navigate to www.bing.com
 	When I convert <src-amount> <src-unit> to <dest-unit>
-	Then Bing should show the conversion widget for <type>
+	Then the search engine should show the conversion widget for <type>
 	And the conversion result should be <dest-amount> <dest-unit>
 
 Examples:

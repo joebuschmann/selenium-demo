@@ -19,6 +19,7 @@ namespace SeleniumAndSpecflow
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("BingSearch")]
+    [NUnit.Framework.CategoryAttribute("bing")]
     public partial class BingSearchFeature
     {
         
@@ -32,7 +33,8 @@ namespace SeleniumAndSpecflow
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BingSearch", "\tIn order to validate the Bing search service\r\n\tas a first time user of Selenium\r" +
-                    "\n\tI want to perform a search", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "\n\tI want to perform a search", ProgrammingLanguage.CSharp, new string[] {
+                        "bing"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -69,14 +71,14 @@ namespace SeleniumAndSpecflow
         public virtual void PerformABingSearch()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Perform a Bing Search", ((string[])(null)));
-#line 6
-this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.When("I search for kittens", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.Then("Bing should return valid search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I search for kittens", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
+ testRunner.Then("the search engine should return valid search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -86,15 +88,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DictionarySearch()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dictionary Search", ((string[])(null)));
-#line 11
-this.ScenarioSetup(scenarioInfo);
 #line 12
- testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.When("I search for define: relativity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.Then("Bing should show the dictionary widget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I search for define: relativity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
+ testRunner.Then("the search engine should show the dictionary widget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
  testRunner.And("the definition for relativity should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -108,15 +110,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void UnitConversions(string type, string src_Amount, string src_Unit, string dest_Amount, string dest_Unit, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unit Conversions", exampleTags);
-#line 17
-this.ScenarioSetup(scenarioInfo);
 #line 18
- testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 19
- testRunner.When(string.Format("I convert {0} {1} to {2}", src_Amount, src_Unit, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I navigate to www.bing.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 20
- testRunner.Then(string.Format("Bing should show the conversion widget for {0}", type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When(string.Format("I convert {0} {1} to {2}", src_Amount, src_Unit, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
+ testRunner.Then(string.Format("the search engine should show the conversion widget for {0}", type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
  testRunner.And(string.Format("the conversion result should be {0} {1}", dest_Amount, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

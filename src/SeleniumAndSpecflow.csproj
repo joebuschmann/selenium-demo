@@ -66,24 +66,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BingSearch.cs">
-      <DependentUpon>BingSearch.feature</DependentUpon>
-    </Compile>
     <Compile Include="BingSearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BingSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="BingSearchProvider.cs" />
+    <Compile Include="BootstrapSearchProvider.cs" />
     <Compile Include="BootstrapSelenium.cs" />
-    <Compile Include="GoogleSearch.cs">
-      <DependentUpon>GoogleSearch.feature</DependentUpon>
-    </Compile>
     <Compile Include="GoogleSearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GoogleSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="GoogleSearchProvider.cs" />
+    <Compile Include="ISearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
