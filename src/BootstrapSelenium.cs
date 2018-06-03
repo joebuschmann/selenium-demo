@@ -68,7 +68,6 @@ namespace SeleniumAndSpecflow
             _objectContainer.RegisterInstanceAs(_defaultWait, typeof(IWait<IWebDriver>));
         }
 
-        [AfterScenario]
         public void Dispose()
         {
             if (_webDriver != null)
