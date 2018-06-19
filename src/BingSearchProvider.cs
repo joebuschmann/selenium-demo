@@ -19,7 +19,12 @@ namespace SeleniumAndSpecflow
             _defaultWait = defaultWait;
         }
 
-        public void Search(string searchTerm)
+		public void InitializeBrowser()
+		{
+			_webDriver.Navigate().GoToUrl("https://www.bing.com");
+		}
+
+		public void Search(string searchTerm)
         {
             _searchTerm = searchTerm;
 

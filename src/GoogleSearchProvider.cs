@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -18,7 +19,12 @@ namespace SeleniumAndSpecflow
             _defaultWait = defaultWait;
         }
 
-        public void Search(string searchTerm)
+		public void InitializeBrowser()
+		{
+			_webDriver.Navigate().GoToUrl("https://www.google.com");
+		}
+
+		public void Search(string searchTerm)
         {
             _searchTerm = searchTerm;
 
@@ -106,5 +112,5 @@ namespace SeleniumAndSpecflow
             Assert.AreEqual("text", input.GetAttribute("type"));
             Assert.AreEqual("Enter a word", input.GetAttribute("placeholder"));
         }
-    }
+	}
 }

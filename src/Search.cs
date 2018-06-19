@@ -1,30 +1,24 @@
-﻿using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
 namespace SeleniumAndSpecflow
 {
     [Binding]
     public class Search
     {
-        private readonly IWebDriver _webDriver;
         private readonly ISearchProvider _searchProvider;
 
-        public Search(IWebDriver webDriver, ISearchProvider searchProvider)
+        public Search(ISearchProvider searchProvider)
         {
-            _webDriver = webDriver;
             _searchProvider = searchProvider;
         }
 
-        [Given(@"I navigate to (.*)")]
-        public void Navigate(string url)
-        {
-            if (!url.StartsWith("http") && !url.StartsWith("https"))
-                url = "https://" + url;
+		[Given(@"a browser loaded with the search provider's web page")]
+		public void InitializeBrowser()
+		{
+			_searchProvider.InitializeBrowser();
+		}
 
-            _webDriver.Navigate().GoToUrl(url);
-        }
-
-        [When(@"I search for (.*)")]
+		[When(@"I search for (.*)")]
         public void DoSearch(string searchTerm)
         {
             _searchProvider.Search(searchTerm);

@@ -1,22 +1,22 @@
 ﻿@bing
 Feature: BingSearch
-	In order to validate the Bing search service
-	as a first time user of Selenium
+	In order to find information on the internet
+	as a user of the Bing search engine
 	I want to perform a search
 
-Scenario: Perform a Bing Search
-	Given I navigate to www.bing.com
+Scenario: Perform a Basic Search
+	Given a browser loaded with the search provider's web page
 	When I search for kittens
 	Then the search engine should return valid search results
 
 Scenario: Dictionary Search
-	Given I navigate to www.bing.com
+	Given a browser loaded with the search provider's web page
 	When I search for define: relativity
 	Then the search engine should show the dictionary widget
 	And the definition for relativity should be displayed
 
 Scenario Outline: Unit Conversions
-	Given I navigate to www.bing.com
+	Given a browser loaded with the search provider's web page
 	When I convert <src-amount> <src-unit> to <dest-unit>
 	Then the search engine should show the conversion widget for <type>
 	And the conversion result should be <dest-amount> <dest-unit>
