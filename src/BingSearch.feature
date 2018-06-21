@@ -1,7 +1,7 @@
 ﻿@bing
 Feature: BingSearch
 	In order to find information on the internet
-	as a user of the Bing search engine
+	As a user of the Bing search engine
 	I want to perform a search
 
 Scenario: Perform a Basic Search

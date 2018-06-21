@@ -32,7 +32,7 @@ namespace SeleniumAndSpecflow
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BingSearch", "\tIn order to find information on the internet\r\n\tas a user of the Bing search engi" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BingSearch", "\tIn order to find information on the internet\r\n\tAs a user of the Bing search engi" +
                     "ne\r\n\tI want to perform a search", ProgrammingLanguage.CSharp, new string[] {
                         "bing"});
             testRunner.OnFeatureStart(featureInfo);
