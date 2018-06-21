@@ -68,11 +68,25 @@ namespace SeleniumAndSpecflow
             Assert.AreEqual(type.ToLower(), selectedOption.Text.ToLower());
         }
 
-        public void ValidateDefinition(string word)
+        public void ValidateDefinition(string definition)
         {
+			// Validate the search term is displayed
             IWebElement searchInput = _defaultWait.Until(d => d.FindElement(By.CssSelector("input#sb_form_q")));
-            Assert.AreEqual(word, searchInput.GetAttribute("value").Replace("define:", "").Trim());
-        }
+            Assert.AreEqual(_searchTerm, searchInput.GetAttribute("value"));
+
+			// Make sure the definition is displayed
+	        // The definition span isn't easy to get. Query for all spans inside a list and check them for the definition.
+	        IWebElement elementWithDefinition =
+		        _defaultWait.Until(d =>
+		        {
+			        IEnumerable<IWebElement> elements =
+				        _widgetElement.FindElements(By.CssSelector("div.WordContainer ol li div"));
+
+			        return elements.FirstOrDefault(e => e.Text == definition);
+		        });
+
+	        Assert.IsNotNull(elementWithDefinition);
+		}
 
         public void ValidateDictionaryWidgetIsVisible()
         {

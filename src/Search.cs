@@ -55,10 +55,10 @@ namespace SeleniumAndSpecflow
             _searchProvider.ValidateDictionaryWidgetIsVisible();
         }
 
-        [Then(@"the definition for (.*) should be displayed")]
-        public void ValidateDefinition(string word)
-        {
-            _searchProvider.ValidateDefinition(word);
-        }
-    }
+	    [Then(@"the following definition should be returned")]
+	    public void ValidateDefinition(string definition)
+	    {
+			_searchProvider.ValidateDefinition(definition);
+		}
+	}
 }

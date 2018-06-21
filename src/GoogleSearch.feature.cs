@@ -96,8 +96,9 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I search for define: relativity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
  testRunner.Then("the search engine should show the dictionary widget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
 #line 16
- testRunner.And("the definition for relativity should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the following definition should be returned", "the absence of standards of absolute and universal application.", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -110,15 +111,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void UnitConversions(string type, string src_Amount, string src_Unit, string dest_Amount, string dest_Unit, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unit Conversions", exampleTags);
-#line 18
-this.ScenarioSetup(scenarioInfo);
-#line 19
- testRunner.Given("a browser loaded with the search provider\'s web page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 20
- testRunner.When(string.Format("I convert {0} {1} to {2}", src_Amount, src_Unit, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.Then(string.Format("the search engine should show the conversion widget for {0}", type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 22
+ testRunner.Given("a browser loaded with the search provider\'s web page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 23
+ testRunner.When(string.Format("I convert {0} {1} to {2}", src_Amount, src_Unit, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+ testRunner.Then(string.Format("the search engine should show the conversion widget for {0}", type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 25
  testRunner.And(string.Format("the conversion result should be {0} {1}", dest_Amount, dest_Unit), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

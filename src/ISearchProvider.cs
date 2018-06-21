@@ -6,7 +6,7 @@
 		void Search(string searchTerm);
         void ValidateConversionResult(string destAmount, string destUnit);
         void ValidateConversionWidgetIsVisible(string type);
-        void ValidateDefinition(string word);
+        void ValidateDefinition(string definition);
         void ValidateDictionaryWidgetIsVisible();
         void ValidateSearchResults();
     }

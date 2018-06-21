@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -65,7 +66,7 @@ namespace SeleniumAndSpecflow
 
             // Make sure the correct measurement type is selected in the form
             IWebElement selectedOption = _defaultWait.Until(d =>
-                _widgetElement.FindElement(By.CssSelector("div._frf select option:checked")));
+                _widgetElement.FindElement(By.CssSelector("select option:checked")));
 
             Assert.IsNotNull(selectedOption);
             Assert.AreEqual(type.ToLower(), selectedOption.Text.ToLower());
@@ -75,17 +76,18 @@ namespace SeleniumAndSpecflow
         public void ValidateConversionResult(string destAmount, string destUnit)
         {
             // Make sure the correct amount is displayed
-            IWebElement amountElement = _defaultWait.Until(d =>
-            {
-                return _widgetElement.FindElement(By.CssSelector("div#_Cif input"));
-            });
+	        IWebElement amountElement = _defaultWait.Until(d =>
+		        _widgetElement.FindElement(By.CssSelector($"input[value=\"{destAmount}\"]")));
 
             Assert.AreEqual(destAmount, amountElement.GetAttribute("value"));
 
             // Make sure the correct unit is selected
             IWebElement selectedOption = _defaultWait.Until(d =>
             {
-                return _widgetElement.FindElement(By.CssSelector("div#_Cif select option:checked"));
+	            IEnumerable<IWebElement> selectedOptions =
+		            _widgetElement.FindElements(By.CssSelector("select option:checked"));
+
+	            return selectedOptions.FirstOrDefault(elm => elm.Text.ToLower() == destUnit.ToLower());
             });
 
             Assert.IsNotNull(selectedOption);
@@ -102,15 +104,31 @@ namespace SeleniumAndSpecflow
             });
 
             Assert.IsNotNull(_widgetElement);
-        }
 
-        public void ValidateDefinition(string word)
+			// Verify the input textbox for a word exists
+	        IWebElement input =
+		        _defaultWait.Until(d => _widgetElement.FindElement(By.CssSelector("input[type=\"text\"].dw-sbi")));
+
+	        Assert.IsTrue(input.GetAttribute("placeholder").StartsWith("Enter a word"));
+		}
+
+        public void ValidateDefinition(string definition)
         {
-            IWebElement input =
-                _defaultWait.Until(d => _widgetElement.FindElement(By.CssSelector($"input[value=\"{word}\"]")));
+	        // Validate the search term is displayed
+	        IWebElement searchInput = _defaultWait.Until(d => d.FindElement(By.CssSelector("input#lst-ib")));
+	        Assert.AreEqual(_searchTerm, searchInput.GetAttribute("value"));
 
-            Assert.AreEqual("text", input.GetAttribute("type"));
-            Assert.AreEqual("Enter a word", input.GetAttribute("placeholder"));
+			// The definition span isn't easy to get. Query for all spans inside a list and check them for the definition.
+			IWebElement elementWithDefinition =
+                _defaultWait.Until(d =>
+                {
+	                IEnumerable<IWebElement> elements =
+		                _widgetElement.FindElements(By.CssSelector("div.vmod ol li span"));
+
+	                return elements.FirstOrDefault(e => e.Text == definition);
+                });
+
+	        Assert.IsNotNull(elementWithDefinition);
         }
 	}
 }

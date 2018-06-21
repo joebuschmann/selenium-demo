@@ -13,7 +13,10 @@ Scenario: Dictionary Search
 	Given a browser loaded with the search provider's web page
 	When I search for define: relativity
 	Then the search engine should show the dictionary widget
-	And the definition for relativity should be displayed
+	And the following definition should be returned
+		"""
+		the absence of standards of absolute and universal application.
+		"""
 
 Scenario Outline: Unit Conversions
 	Given a browser loaded with the search provider's web page
